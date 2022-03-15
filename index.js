@@ -26,17 +26,22 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-//Temp Ethereum addresses
-let addresses = [];
+
 let merkleTree;
+
+//Temp Ethereum addresses
+
+let addresses = [];
 
 const setMerkle = () => {
   // Hash leaves
   let leaves = addresses.map((addr) => keccak256(addr));
-  //Create tree
+  //Update tree
   merkleTree = new MerkleTree(leaves, keccak256, { sortPairs: true });
 };
+
 //Get Root
+
 const getRoot = (addresses) => {
   setMerkle();
   let rootHash = merkleTree.getRoot().toString("hex");
@@ -45,6 +50,7 @@ const getRoot = (addresses) => {
 };
 
 //Get Proof
+
 const getProof = (address) => {
   setMerkle();
   let hashedAddress = keccak256(address);
